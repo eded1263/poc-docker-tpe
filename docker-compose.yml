@@ -1,0 +1,27 @@
+version: '3'
+services:
+  todo_app:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - /app/node_modules
+      - .:/app
+    environment:
+      - NODE_PORT=3001
+      - TARGET_DATABASE=todos
+      - USER_DATABASE=admin
+      - PASSWORD_DATABASE=adminpassowrd
+      - HOST_DATABASE=mysql_todo
+  mysql_todo:
+    container_name: mysql_todo
+    image: mysql:5.7
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpw
+      - MYSQL_DATABASE=todos
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=adminpassowrd
